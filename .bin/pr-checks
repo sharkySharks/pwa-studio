@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+# used for script output
+message () {
+  echo ""
+  echo "==========================================================================="
+  echo ""
+  echo "        " "$1"
+  echo ""
+  echo "==========================================================================="
+  echo ""
+}
+
+message "Installing dependencies with yarn..."
+yarn install --frozen-lockfile
+
+# production build - needed for some of the subsequent checks, like storybook
+message "Running production build..."
+cp ./docker/.env.docker.prod ./packages/venia-concept/.env
+yarn run build
+
+# jest tests - does not fail ci, failures are evaluated by danger check below
+message "Running unit tests with Jest..."
+yarn run test:ci
+
+message "Running Coveralls..."
+yarn run coveralls
+
+message "Running Storybook..."
+yarn workspace @magento/venia-concept run storybook:build
+
+message "Running Bundlesize..."
+yarn run bundlesize
+
+# Danger-JS is missing CodeBuild configuration
+# this can be removed when https://github.com/danger/danger-js/pull/844 is merged 
+# and the danger version updated to include changes
+# copy CodeBuild files into danger node_modules folder to recognize CodeBuild CI
+message "Copying Danger files"
+cp ./.codebuild/danger-codebuild/* ./node_modules/danger/distribution/ci_source/providers
+
+# danger ci - eslint, prettier:check, unit test evaluation, etc.
+message "Running Danger..."
+yarn run danger
