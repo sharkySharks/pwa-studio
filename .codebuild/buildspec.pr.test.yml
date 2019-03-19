@@ -8,14 +8,11 @@ phases:
       - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
       - apt-get update -y
       - apt-get install -y yarn
-  pre_build:
-    commands:
-      - echo entering pre-build phase...
-      - yarn install --frozen-lockfile
   build:
     commands:
-      - echo running tests
-      - yarn run test:ci
+      - echo running pr-checks script `date`
+      # contains all the pr check task scripts
+      - yarn run ci:pr-checks
   post_build:
     commands:
       - echo pr test tasks complete `date`

@@ -1,3 +1,4 @@
+# buildspec for deploying latest changes to main development branch
 version: 0.2
 phases:
   install:

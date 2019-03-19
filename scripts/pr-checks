@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# install dependencies
+yarn install --frozen-lockfile
+
+# jest tests
+yarn run test:ci
+
+# coveralls
+yarn run coveralls
+
+# storybook
+yarn workspace @magento/venia-concept run storybook:build
+
+# check bundlesize
+yarn run bundlesize
+
+# danger ci
+# yarn run danger
