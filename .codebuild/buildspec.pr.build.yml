@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo entering install step...
+  pre_build:
+    commands:
+      - echo logging in to AWS ECR...
+      - $(aws ecr get-login --no-include-email --region us-east-1)
+  build:
+    commands:
+      - echo build Docker image on `date` for github branch $CODEBUILD_SOURCE_VERSION
+      # tag image with just the PR number from $CODEBUILD_SOURCE_VERSION, originally in the format `pr/2`
+      - docker build -f Dockerfile.prod -t pwa:$(echo $CODEBUILD_SOURCE_VERSION | cut -d"/" -f 2) .
+      - docker tag pwa:$(echo $CODEBUILD_SOURCE_VERSION | cut -d"/" -f 2) 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-pr-build
+  post_build:
+    commands:
+      - echo build Docker image complete `date` for github branch $CODEBUILD_SOURCE_VERSION
+      - echo push latest Docker images to ECR...
+      - docker push 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-pr-build
