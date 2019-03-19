@@ -2,19 +2,26 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo install step...
-      - sudo apt update && sudo apt install yarn && yarn --version
-      - yarn install --frozen-lockfile
+      - echo entering install step...
+      # for yarn
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+      - apt-get update -y
+      - apt-get install -y yarn
   pre_build:
     commands:
+      - echo entering pre-build phase...
+      - yarn install --frozen-lockfile
       - echo logging in to AWS ECR...
       - $(aws ecr get-login --no-include-email --region us-east-1)
-      - yarn run test:ci
   build:
     commands:
+      - echo running tests
+      - yarn run test:ci
       - echo build Docker image on `date` for github branch $CODEBUILD_SOURCE_VERSION
-      - docker build -f Dockerfile.prod -t pwa:$CODEBUILD_SOURCE_VERSION .
-      - docker tag pwa:$CODEBUILD_SOURCE_VERSION 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-pullrequests
+      # grab just the pull request number out of $CODEBUILD_SOURCE_VERSION, originally in the format `pr/2`
+      - docker build -f Dockerfile.prod -t pwa:$(echo $CODEBUILD_SOURCE_VERSION | cut -d"/" -f 2) .
+      - docker tag pwa:$(echo $CODEBUILD_SOURCE_VERSION | cut -d"/" -f 2) 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-pullrequests
   post_build:
     commands:
       - echo build Docker image complete `date` for github branch $CODEBUILD_SOURCE_VERSION
