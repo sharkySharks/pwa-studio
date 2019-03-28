@@ -32,13 +32,6 @@ yarn workspace @magento/venia-concept run storybook:build
 message "Running Bundlesize..."
 yarn run bundlesize
 
-# Danger-JS is missing CodeBuild configuration
-# this can be removed when https://github.com/danger/danger-js/pull/844 is merged 
-# and the danger version updated to include changes
-# copy CodeBuild files into danger node_modules folder to recognize CodeBuild CI
-message "Copying Danger files"
-cp ./.codebuild/danger-codebuild/* ./node_modules/danger/distribution/ci_source/providers
-
 # danger ci - eslint, prettier:check, unit test evaluation, etc.
 message "Running Danger..."
 yarn run danger
