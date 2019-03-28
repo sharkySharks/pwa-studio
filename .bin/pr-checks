@@ -10,6 +10,7 @@ message () {
   echo "==========================================================================="
   echo ""
 }
+STATUS=0
 
 message "Installing dependencies with yarn..."
 yarn install --frozen-lockfile
@@ -19,7 +20,7 @@ message "Running production build..."
 cp ./docker/.env.docker.prod ./packages/venia-concept/.env
 yarn run build
 
-# jest tests - does not fail ci, failures are evaluated by danger check below
+jest tests - does not fail ci, failures are evaluated by danger check below
 message "Running unit tests with Jest..."
 yarn run test:ci
 
@@ -32,6 +33,9 @@ yarn workspace @magento/venia-concept run storybook:build
 message "Running Bundlesize..."
 yarn run bundlesize
 
-# danger ci - eslint, prettier:check, unit test evaluation, etc.
+# danger ci - eslint, prettier:validate, unit test evaluation, etc.
 message "Running Danger..."
-yarn run danger
+yarn run danger || STATUS=$?
+
+echo "Exit Status: $STATUS"
+exit $STATUS

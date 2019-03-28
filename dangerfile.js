@@ -130,8 +130,7 @@ const tasks = [
             const result = execa.sync('yarn', [
                 'run',
                 '--silent',
-                'prettier:check',
-                '--loglevel=debug'
+                'prettier:validate'
             ]);
             stdout = result.stdout;
             stderr = result.stderr;
@@ -271,6 +270,7 @@ const tasks = [
                 'All tests must pass before this PR can be merged\n\n\n' +
                 failSummary
         );
+        throw new Error(failSummary);
     }
 
     // function mergeJunitReports() {
@@ -306,6 +306,25 @@ const tasks = [
     // }
 ];
 
+const runTasks = async tasks => {
+    const errors = [];
+    for (const task of tasks) {
+        try {
+            await task();
+        } catch (e) {
+            errors.push({ task: task.name, error: e.stdout || e });
+        }
+    }
+    return errors;
+}
+
 (async () => {
-    for (const task of tasks) await task();
+    const errors = await runTasks(tasks);
+    if (errors.length) {
+        errors.map(e => {
+            console.log(codeFence(`ERROR ON TASK: ${e.task}`));
+            console.log(e.error);
+        })
+        throw "Danger found errors. See stack trace above."
+    }
 })();
