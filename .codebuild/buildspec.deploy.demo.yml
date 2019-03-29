@@ -11,13 +11,13 @@ phases:
   build:
     commands:
       - echo build Docker image on `date`
-      - docker build -f Dockerfile.prod -t pwa:latest .
-      - docker tag pwa:latest 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa
+      - docker build -f Dockerfile.prod -t pwa-demo:latest .
+      - docker tag pwa-demo:latest 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-demo
   post_build:
     commands:
       - echo build Docker image complete `date`
       - echo push latest Docker images to ECR...
-      - docker push 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa
+      - docker push 276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-demo
 artifacts:
   files:
     - Dockerrun.aws.json

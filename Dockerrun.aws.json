@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa:latest",
+    "Name": "276375911640.dkr.ecr.us-east-1.amazonaws.com/pwa-demo:latest",
     "Update": "true"
   },
   "Ports": [
