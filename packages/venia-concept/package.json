@@ -27,7 +27,9 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook:build": "build-storybook -c .storybook -o storybook-dist",
     "validate-queries": "yarn run download-schema && graphql validate-magento-pwa-queries --project venia",
-    "watch": "webpack-dev-server --progress --color --env.mode development"
+    "watch": "webpack-dev-server --progress --color --env.mode development",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": "github:magento-research/pwa-studio",
   "author": "Magento Commerce",
@@ -63,7 +65,8 @@
     "redux": "~4.0.1",
     "redux-actions": "~2.6.4",
     "redux-thunk": "~2.3.0",
-    "uuid": "~3.3.2"
+    "uuid": "~3.3.2",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@babel/core": "~7.3.4",
@@ -111,5 +114,6 @@
   "sideEffects": [
     "./src/index.js",
     "./src/**/*.css"
-  ]
+  ],
+  "snyk": true
 }
