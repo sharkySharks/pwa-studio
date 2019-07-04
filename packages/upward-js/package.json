@@ -15,7 +15,9 @@
     "build:dev": "yarn run build",
     "clean": "echo 'Skipping upward-js clean...'",
     "test": "jest",
-    "test:spec": "upward-spec ./test_spec.sh"
+    "test:spec": "upward-spec ./test_spec.sh",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": "github:magento-research/pwa-studio",
   "keywords": [
@@ -45,7 +47,8 @@
     "js-yaml": "~3.12.1",
     "lodash": "~4.17.11",
     "morgan": "~1.9.1",
-    "node-fetch": "~2.3.0"
+    "node-fetch": "~2.3.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@magento/upward-spec": "~2.1.0",
@@ -61,5 +64,6 @@
   "engines": {
     "node": ">=10.7.0",
     "yarn": ">=1.12.0"
-  }
+  },
+  "snyk": true
 }
