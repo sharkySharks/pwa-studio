@@ -6,7 +6,9 @@
   "scripts": {
     "build": "echo 'Skipping graphql-cli-validate-magento-pwa-queries build...'",
     "clean": "rimraf ./node_modules",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": "https://github.com/magento-research/pwa-studio",
   "keywords": [
@@ -18,7 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "eslint": "~5.15.1",
-    "eslint-plugin-graphql": "~3.0.3"
+    "eslint-plugin-graphql": "~3.0.3",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-eslint": "~10.0.1",
@@ -26,5 +29,6 @@
     "jest": "~24.5.0",
     "rimraf": "~2.6.3",
     "semver": "~5.6.0"
-  }
+  },
+  "snyk": true
 }
