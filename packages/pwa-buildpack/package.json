@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/magento-research/pwa-studio/tree/master/packages/pwa-buildpack#readme",
   "dependencies": {
-    "@babel/core": "~7.3.4",
+    "@babel/core": "~7.22.6",
     "@babel/helper-module-imports": "~7.0.0",
     "@babel/plugin-syntax-dynamic-import": "~7.2.0",
     "@babel/plugin-transform-react-jsx": "~7.3.0",
