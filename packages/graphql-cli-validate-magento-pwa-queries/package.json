@@ -17,7 +17,7 @@
   "author": "Adobe, Inc",
   "license": "MIT",
   "dependencies": {
-    "eslint": "~5.15.1",
+    "eslint": "~6.0.0",
     "eslint-plugin-graphql": "~3.0.3"
   },
   "devDependencies": {
