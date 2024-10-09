@@ -45,7 +45,7 @@
     "devcert": "~1.0.0",
     "dotenv": "~6.2.0",
     "execa": "~1.0.0",
-    "express": "~4.16.4",
+    "express": "~4.21.1",
     "graphql-playground-middleware-express": "~1.7.12",
     "lodash": "~4.17.11",
     "node-fetch": "~2.3.0",
