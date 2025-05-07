@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/magento-research/pwa-studio/tree/master/packages/venia-concept#readme",
   "dependencies": {
-    "@babel/runtime": "~7.3.4",
+    "@babel/runtime": "~7.26.10",
     "@magento/peregrine": "~2.1.0",
     "apollo-boost": "~0.1.28",
     "apollo-cache-inmemory": "~1.4.3",
